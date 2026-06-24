@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import api from '../api';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Spinner from './Spinner';
 import NewsItem from './NewsItem';
@@ -42,7 +42,7 @@ class News extends Component {
     setProgress(10);
     this.setState({ loading: true, error: null });
     try {
-      const { data } = await axios.get('/api/news/top-headlines', {
+      const { data } = await api.get('/api/news/top-headlines', {
         params: { country, category, page, pageSize },
       });
       setProgress(70);

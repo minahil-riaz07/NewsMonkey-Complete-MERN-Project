@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Spinner from './Spinner';
 import NewsItem from './NewsItem';
@@ -29,7 +29,7 @@ const SearchResults = ({ setProgress }) => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.get('/api/news/search', {
+      const { data } = await api.get('/api/news/search', {
         params: { q: q || query, page: pageNo, pageSize: 9 },
       });
       setProgress(70);

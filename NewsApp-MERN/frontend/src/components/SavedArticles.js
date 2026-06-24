@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import Spinner from './Spinner';
@@ -36,7 +36,7 @@ const SavedArticles = () => {
 
   const fetchSaved = async () => {
     try {
-      const { data } = await axios.get('/api/saved');
+      const { data } = await api.get('/api/saved');
       setArticles(data.articles);
     } catch {
       toast.error('Failed to load saved articles');
@@ -47,7 +47,7 @@ const SavedArticles = () => {
 
   const handleRemove = async (id, url) => {
     try {
-      await axios.delete(`/api/saved/${id}`);
+      await api.delete(`/api/saved/${id}`);
       setArticles((prev) => prev.filter((a) => a._id !== id));
       removeSavedUrl(url);
       toast.success('Article removed');
@@ -60,7 +60,7 @@ const SavedArticles = () => {
     const text = commentText[articleId]?.trim();
     if (!text) return;
     try {
-      const { data } = await axios.post(`/api/saved/${articleId}/comments`, { text });
+      const { data } = await api.post(`/api/saved/${articleId}/comments`, { text });
       setArticles((prev) =>
         prev.map((a) => (a._id === articleId ? { ...a, comments: data.comments } : a))
       );
@@ -73,7 +73,7 @@ const SavedArticles = () => {
 
   const handleDeleteComment = async (articleId, commentId) => {
     try {
-      const { data } = await axios.delete(`/api/saved/${articleId}/comments/${commentId}`);
+      const { data } = await api.delete(`/api/saved/${articleId}/comments/${commentId}`);
       setArticles((prev) =>
         prev.map((a) => (a._id === articleId ? { ...a, comments: data.comments } : a))
       );

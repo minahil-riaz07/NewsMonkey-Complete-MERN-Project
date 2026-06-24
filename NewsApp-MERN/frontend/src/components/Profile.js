@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import Footer from './Footer';
@@ -24,7 +24,7 @@ const Profile = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await axios.put('/api/auth/profile', { name, preferredCategories: prefs });
+      await api.put('/api/auth/profile', { name, preferredCategories: prefs });
       toast.success('Profile updated!');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Update failed');

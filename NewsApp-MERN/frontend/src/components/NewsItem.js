@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import api from '../api';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 
@@ -28,15 +28,15 @@ const NewsItem = ({ title, description, imageUrl, newsUrl, author, date, source,
     }
     try {
       if (isSaved) {
-        const { data: savedData } = await axios.get('/api/saved');
+        const { data: savedData } = await api.get('/api/saved');
         const match = savedData.articles.find((a) => a.newsUrl === newsUrl);
         if (match) {
-          await axios.delete(`/api/saved/${match._id}`);
+          await api.delete(`/api/saved/${match._id}`);
           removeSavedUrl(newsUrl);
           toast.success('Removed from saved');
         }
       } else {
-        await axios.post('/api/saved', {
+        await api.post('/api/saved', {
           title,
           description,
           imageUrl,
