@@ -12,6 +12,9 @@ connectDB();
 
 const app = express();
 
+// ─── Trust Proxy (for Render) ────────────────────────────────────────────────
+app.set("trust proxy", 1);
+
 // ─── Middleware ────────────────────────────────────────────────────────────────
 const allowedOrigins = [
   'http://localhost:3000',
